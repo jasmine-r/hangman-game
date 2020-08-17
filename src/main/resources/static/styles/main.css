@@ -9,3 +9,35 @@ body,h1, h2,h3,h4,h5,h6 {
 .icon {
     font-size: 50px;
 }
+
+.circle {
+  display: flex;
+  float: left;
+  height: 175px;
+  width: 175px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  margin-left: 30px;
+}
+
+.circle-content {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.grid1 {
+    margin-right: 10px;
+}
+
+.img1, .img2, .img3, .img4, .img5, .img6, .img7, .img8 {
+    float: right;
+    width: fit-content;
+    margin-left: 45px;
+}
+
+.game-text {
+    float: left;
+    width: fit-content;
+    margin-right: 30px;
+}

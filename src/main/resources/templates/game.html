@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Hangman Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto Slab' rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" >
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" >
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<!-- Header -->
+<header class="w3-container w3-red w3-center" style="padding:15px">
+    <h1 class="w3-margin w3-jumbo"> <i class="fa fa-puzzle-piece" aria-hidden="true"></i>Online Hangman Game</h1>
+    <p class="w3-xlarge">By <a href="https://github.com/jasmine-r" class = "w3-hover-opacity"> jasmine-r <i class="fa fa-github"></i> </a></p>
+</header>
+
+<!-- First Grid -->
+<div class="grid1 w3-row-padding w3-padding-64 w3-container">
+    <div class="w3-content">
+        <div>
+            <h2>Game ID: <span th:text="${currentGame.id}"></span></h2>
+
+            <div class="content" >
+
+                <!-- Game Text - the dashes (representing the word), game stats -->
+                <div class="game-text">
+                    <h2 class="w3-padding-32">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        Word: &nbsp; &nbsp; <span th:text="${currentGame.dashOutput}"></span></h2>
+
+
+                    <!-- form for letter guess -->
+                    <form action="#" th:action="@{/game/} + ${currentGame.id}" method="post" th:object="${guess}">
+                        <label>Guess: </label> &nbsp;
+                        <input type="text" th:field="*{guessedLetter}" /> &nbsp;
+                        <button type="submit">Enter</button>
+                    </form>
+
+                    <!-- notify user of invalid input -->
+                    <div th:switch="${currentGame.validInputFlag}">
+                        <div th:case="true">
+                            <p></p>
+                        </div>
+                        <div th:case="false">
+                            <p>
+                                Sorry! That doesn't seem like a valid letter. Please try again <span style='font-size:30px;'>&#128565;</span>
+                            </p>
+                        </div>
+                    </div>
+                    <br/><br/>
+
+                    <!-- game stats -->
+                    <h4>
+                        <i class="fa fa-bullseye" aria-hidden="true"></i>
+                        Game Stats:
+                    </h4>
+                    <ul>
+                        <li>Number of guesses in total: <span th:text="${currentGame.totalGuesses}"></span></br></li>
+                        <li>Number of incorrect guesses: <span th:text="${currentGame.incorrectGuesses}"></span></br></li>
+                    </ul>
+                    </br>
+                </div>
+
+                <!-- Game Status -->
+                <div th:switch="${currentGame.status.name()}" class="circle-status">
+                    <div th:case="'ACTIVE'" class="circle w3-green">
+                        <div class="circle-content">
+                            Status: <span th:text="${currentGame.status}"></span>
+                        </div>
+                    </div>
+                    <div th:case="'LOST'"class="circle w3-red">
+                        <div class="circle-content">
+                            Status: <span th:text="${currentGame.status}"></span>
+                            <i class="fa fa-frown-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div th:case="'WON'" class="circle w3-yellow">
+                        <div class="circle-content">
+                            Status: <span th:text="${currentGame.status}"></span>
+                            <i class="fa fa-smile-o" aria-hidden="true"></i>
+                            <i class="fa fa-trophy" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- hangman picture -->
+                <div th:switch="${currentGame.incorrectGuesses}" class="hangman">
+                    <div th:case="0">
+                    </div>
+                    <div th:case="1" class="img1">
+                        <img th:src="@{/images/incorrect1.jpg}" />
+                    </div>
+                    <div th:case="2" class="img2">
+                        <img th:src="@{/images/incorrect2.jpg}" />
+                    </div>
+                    <div th:case="3" class="img3">
+                        <img th:src="@{/images/incorrect3.jpg}" />
+                    </div>
+                    <div th:case="4" class="img4">
+                        <img th:src="@{/images/incorrect4.jpg}" />
+                    </div>
+                    <div th:case="5" class="img5">
+                        <img th:src="@{/images/incorrect5.jpg}" />
+                    </div>
+                    <div th:case="6" class="img6">
+                        <img th:src="@{/images/incorrect6.jpg}" />
+                    </div>
+                    <div th:case="7" class="img7">
+                        <img th:src="@{/images/incorrect7.jpg}" />
+                    </div>
+                    <div th:case="8" class="img8">
+                        <img th:src="@{/images/incorrect8.jpg}" />
+                    </div>
+                </div>
+                <!-- end of hangman pic -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- grid 2 -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+    <div class="w3-content">
+        <div class="w3-twothird">
+            <h3>Return to Welcome Page?</h3>
+            <h5>
+                <a th:href="@{/welcome}">
+                    <i class="fa fa-home" aria-hidden="true"></i> Go Back To Welcome Page
+                </a>
+            </h5>
+        </div>
+    </div>
+</div>
+
+<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+    <h1 class="w3-margin w3-xlarge">"Good words are worth much, and cost little." —George Herbert</h1>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity">
+    <p> Online Hangman Game | <a href="https://github.com/jasmine-r" class = "w3-hover-opacity"><i class="fa fa-github"></i> jasmine-r</a></p>
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+</body>
+</html>
